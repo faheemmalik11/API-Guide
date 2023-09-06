@@ -148,6 +148,7 @@ When crafting responses for various situations, it's important to provide clear,
        "message": "Access to this resource is forbidden."
      }
      ```
+     
 
 6. **Resource Not Found**:
    - Status Code: 404 Not Found
