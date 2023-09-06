@@ -10,6 +10,7 @@ While there is no hard and fast rule to make rest apis, there are some standard 
 * [Versioning our APIs](#versioning-our-apis)
 * [Add Cache Data](#add-cache-data)
 * [Best Responses](#best-responses)
+* [Api Rate Limits](#api-rate-limits)
 
 ## Must accept and respond with json
 
@@ -177,3 +178,47 @@ When crafting responses for various situations, it's important to provide clear,
 8. **Custom Error Messages**:
    - For application-specific errors, provide meaningful and detailed error messages that help users understand the issue and potential solutions.
 
+## Api Rate Limits
+
+The basic principle of API rate limiting is fairly simple:  if access to the API is unlimited, anyone (or anything) can use the API as much as they want at any time, potentially preventing other legitimate users from accessing the API.
+
+API rate limiting is, in a nutshell, limiting access for people (and bots) to access the API based on the rules/policies set by the API’s operator or owner.
+
+We can think of rate limiting as a form of both security and quality control. This is why rate limiting is integral for any API product’s growth and scalability.
+
+### Why is API rate limiting necessary?
+API rate limiting can be used as a defensive security measure for the API, and also a quality control method. As a shared service, the API must protect itself from excessive use to encourage an optimal experience for anyone using the API.
+
+Rate limiting on both server-side and client-side is extremely important for maximizing reliability and minimizing latency, and the larger the systems/APIs, the more crucial rate limiting will be.
+
+### What are my options for implementing API rate limits?
+* Hard Stop: This means an API consumer will get an Error 429 when they call your API if they are over their limit.
+* Soft Stop: In this case, you might have a grace period where calls can continue to be made for a short period after the limit is reached.
+* Throttled Stop: You might just want to enforce a slowdown on calls made over the limit. This way users can continue to make calls, but they will just be slower because they are over the limit.
+* Billable Stop: Here you might just charge the API consumer for calls made over their limit. Obviously, this would only work for authenticated API users but can be a valid solution.
+
+### Different Methods of Rate Limiting
+As discussed above, we can actually use various methods in performing API rate limiting, but there are three most common methods:
+
+1. Throttling
+Throttling is performed by setting up a temporary state within the API, so the API can properly assess all requests. Based on certain rules, a specific type of request will be throttled during this temporary state; when throttled, a user may either be slowed considerably (by reducing the bandwidth service) or completely disconnected from the API.
+
+We can implement throttling at the API level, user level, and application level, making it a versatile method for rate limiting.
+
+2. Request Queues
+Another popular method of rate limiting is “requests queues”, which limits the number of requests in any given period of time. For example, we can set the rate limit at three requests per second.
+
+3. Algorithm-Based
+In this approach, we are using algorithms to implement the API rate limit, and there are actually various ready-to-use algorithms we can use to implement rate limiting:
+
+- Fixed Window
+In this method, we use a “fixed” number as a limit, and we use a simple incremental counter to count the number of requests. If this fixed window limit is reached in a set period of time (i.e. 3,000 per hour), then additional requests will be blocked temporarily.
+
+- Leaky Bucket
+Here the requests are put in a FIFO (first in first out) queue, so the first user that enters the queue will get the first service from the API.
+
+- Sliding Log
+In this method, a time-stamped log is used to identify different user logs. With each new request, the total number of the logs is calculated, and when logs exceed a certain rate limit, they will be discarded.
+
+- Sliding Window
+Essentially combining fixed window and sliding log algorithms, with this approach both a counter and a log are used to determine a faster rate limiting process. The small number of data needed to assess each request allows a faster calculation process, making it ideal for processing a large number of requests.
