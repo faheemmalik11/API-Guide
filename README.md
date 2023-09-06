@@ -148,7 +148,7 @@ When crafting responses for various situations, it's important to provide clear,
        "message": "Access to this resource is forbidden."
      }
      ```
-     
+
 
 6. **Resource Not Found**:
    - Status Code: 404 Not Found
@@ -177,4 +177,3 @@ When crafting responses for various situations, it's important to provide clear,
 8. **Custom Error Messages**:
    - For application-specific errors, provide meaningful and detailed error messages that help users understand the issue and potential solutions.
 
-Remember to follow RESTful principles, use appropriate HTTP status codes, and maintain consistency in your responses throughout your API. Clear and informative responses can greatly improve the user experience and make troubleshooting easier for developers.
